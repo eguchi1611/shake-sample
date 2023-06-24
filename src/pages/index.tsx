@@ -2,7 +2,6 @@ import RequestButton from "@/components/request-button";
 import { useCallback, useEffect, useState } from "react";
 
 export default function IndexPage() {
-  const [text, setText] = useState("");
   const [flag, setFlag] = useState(false);
   const [val, setVal] = useState(0);
   const [count, setCount] = useState(0);
@@ -20,13 +19,14 @@ export default function IndexPage() {
   }, []);
 
   useEffect(() => {
-    const threshold = 15;
-    if (val > threshold) {
+    // const threshold = 15;
+    if (val > 15) {
       if (!flag) {
         setCount((c) => c + 1);
       }
       setFlag(true);
-    } else {
+    }
+    if (val < 10) {
       setFlag(false);
     }
   }, [val, flag]);
