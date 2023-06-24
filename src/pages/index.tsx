@@ -4,7 +4,8 @@ import { useCallback, useEffect, useState } from "react";
 export default function IndexPage() {
   const [flag, setFlag] = useState(false);
   const [val, setVal] = useState(0);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState("0");
+  const [interval, setInterval] = useState(0);
 
   const listener = useCallback((e: DeviceMotionEvent) => {
     e.preventDefault();
@@ -15,6 +16,7 @@ export default function IndexPage() {
         (acc.x || 0) ** 2 + (acc.y || 0) ** 2 + (acc.z || 0) ** 2
       );
       setVal(abs);
+      setInterval(e.interval);
     }
   }, []);
 
@@ -22,14 +24,15 @@ export default function IndexPage() {
     // const threshold = 15;
     if (val > 15) {
       if (!flag) {
-        setCount((c) => c + 1);
+        // setCount((c) => c + 1);
+        setCount((c) => `${interval}\n${c}`);
       }
       setFlag(true);
     }
     if (val < 10) {
       setFlag(false);
     }
-  }, [val, flag]);
+  }, [val, flag, interval]);
 
   const startWatch = () => {
     addEventListener("devicemotion", listener);
