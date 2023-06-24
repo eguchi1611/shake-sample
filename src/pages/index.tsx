@@ -1,50 +1,44 @@
 import RequestButton from "@/components/request-button";
-import { useCallback, useEffect, useRef, useState } from "react";
-
-const threshold = 15;
-const timeout = 1000;
+import { useCallback, useEffect, useState } from "react";
 
 export default function IndexPage() {
   const [text, setText] = useState("");
-  const [last, setLast] = useState(0);
-
-  // EventListener内でのステート管理HELP
-  // https://qiita.com/eiji-noguchi/items/dc33829b571944b2f679
-  const lastRef = useRef<number | null>(null);
-  lastRef.current = last;
+  const [flag, setFlag] = useState(false);
+  const [val, setVal] = useState(0);
+  const [count, setCount] = useState(0);
 
   const listener = useCallback((e: DeviceMotionEvent) => {
     e.preventDefault();
 
     const acc = e.acceleration;
     if (acc) {
-      const max = Math.max(
-        Math.abs(acc.x || 0),
-        Math.abs(acc.y || 0),
-        Math.abs(acc.z || 0)
+      const abs = Math.sqrt(
+        (acc.x || 0) ** 2 + (acc.y || 0) ** 2 + (acc.z || 0) ** 2
       );
-
-      if (max > threshold) {
-        setText((c) => `shake${Date.now()}\n${c}`);
-        setLast(Date.now());
-      }
+      setVal(abs);
     }
   }, []);
+
+  useEffect(() => {
+    const threshold = 15;
+    if (val > threshold) {
+      if (!flag) {
+        setCount((c) => c + 1);
+      }
+      setFlag(true);
+    } else {
+      setFlag(false);
+    }
+  }, [val, flag]);
 
   const startWatch = () => {
     addEventListener("devicemotion", listener);
   };
 
-  useEffect(() => {
-    return () => {
-      removeEventListener("devicemotion", listener);
-    };
-  }, [listener]);
-
   return (
     <div>
       <RequestButton startWatch={startWatch} />
-      <pre>{text}</pre>
+      <pre>{count}</pre>
     </div>
   );
 }
