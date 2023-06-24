@@ -1,47 +1,20 @@
 import RequestButton from "@/components/request-button";
-import { useCallback, useEffect, useState } from "react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function IndexPage() {
-  const [flag, setFlag] = useState(false);
-  const [val, setVal] = useState(0);
-  const [count, setCount] = useState("0");
-  const [interval, setInterval] = useState(0);
+  const [device, setDevice] = useState("");
 
-  const listener = useCallback((e: DeviceMotionEvent) => {
-    e.preventDefault();
-
-    const acc = e.acceleration;
-    if (acc) {
-      const abs = Math.sqrt(
-        (acc.x || 0) ** 2 + (acc.y || 0) ** 2 + (acc.z || 0) ** 2
-      );
-      setVal(abs);
-      setInterval(e.interval);
+  useEffect(() => {
+    if (/iPhone/.test(navigator.userAgent)) {
+      setDevice("iPhone");
     }
   }, []);
 
-  useEffect(() => {
-    // const threshold = 15;
-    if (val > 15) {
-      if (!flag) {
-        // setCount((c) => c + 1);
-        setCount((c) => `${interval}\n${c}`);
-      }
-      setFlag(true);
-    }
-    if (val < 10) {
-      setFlag(false);
-    }
-  }, [val, flag, interval]);
-
-  const startWatch = () => {
-    addEventListener("devicemotion", listener);
-  };
-
   return (
     <div>
-      <RequestButton startWatch={startWatch} />
-      <pre>{count}</pre>
+      {device === "iPhone" ? <RequestButton /> : null}
+      <Link href="/counter">Counterページへ</Link>
     </div>
   );
 }

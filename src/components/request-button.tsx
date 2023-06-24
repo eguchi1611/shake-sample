@@ -1,31 +1,36 @@
-type Props = {
-  startWatch: () => void;
-};
+import { useState } from "react";
 
-export default function RequestButton({ startWatch }: Props) {
+export default function RequestButton() {
+  const [perm, setPerm] = useState(false);
+
   const handleClick = () => {
     try {
       (DeviceMotionEvent as any)
         .requestPermission()
         .then((state: string) => {
           if (state === "granted") {
-            alert("許可されました 検知を開始します");
-            startWatch();
+            setPerm(true);
           } else {
-            alert("許可されませんでした");
+            // 要検討: パーミッションを取れなかった際の処理
           }
         })
-        .catch(() => {
-          alert("error");
+        .catch((error: unknown) => {
+          console.error(error);
+          alert(error);
         });
     } catch (error) {
-      alert("このデバイスは対応していません");
+      console.error(error);
+      alert(error);
     }
   };
 
-  return (
-    <div>
-      <button onClick={handleClick}>動作へのアクセスの許可</button>
-    </div>
-  );
+  if (perm) {
+    return <div>許可されました</div>;
+  } else {
+    return (
+      <button type="button" onClick={handleClick}>
+        クリックしてアクセス権限を許可してください
+      </button>
+    );
+  }
 }
