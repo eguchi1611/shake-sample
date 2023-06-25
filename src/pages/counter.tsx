@@ -74,7 +74,7 @@ export default function AppPage() {
     };
   }, [count, user]);
 
-  useShake(10, onShake);
+  useShake(15, 10, onShake);
 
   return (
     <div>
