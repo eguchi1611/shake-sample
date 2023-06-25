@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react";
 
-export function useShake(threshold: number, on: () => void) {
+export function useShake(thresholdUpper: number, thresholdLower: number, on: () => void) {
+  console.assert(thresholdLower <= thresholdUpper);
   const [acc, setAcc] = useState(0);
   const [detected, setDetected] = useState(false);
 
   useEffect(() => {
-    if (!detected && acc > threshold) {
+    
+    if (!detected && acc > thresholdUpper) {
       on();
+      setDetected(true);
+    } else if (acc < thresholdLower){
+      setDetected(false);
     }
-    setDetected(acc > threshold);
-  }, [acc, detected, threshold, on]);
+    
+  }, [acc, detected, thresholdUpper, thresholdLower, on]);
 
   useEffect(() => {
     const listener = (e: DeviceMotionEvent) => {

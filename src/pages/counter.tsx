@@ -8,7 +8,7 @@ export default function AppPage() {
     setCount((c) => c + 1);
   }, []);
 
-  useShake(10, onShake);
+  useShake(15, 10, onShake);
 
   return <div>{count}</div>;
 }
