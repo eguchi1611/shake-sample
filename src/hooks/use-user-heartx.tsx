@@ -9,7 +9,7 @@ export default function useUserHearts() {
 
   useEffect(() => {
     const unsubscribe = onValue(
-      ref(db, "counter/" + user.uid + "/count"),
+      ref(db, "hearts/" + user.uid + "/hearts"),
       (snapshot) => {
         const data = snapshot.val();
         setCount(data);
