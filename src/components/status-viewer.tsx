@@ -20,7 +20,7 @@ export default function StatusViewer() {
     }
   }, [user, userHearts]);
 
-  useShake(15, onShake);
+  useShake(10, 5, onShake);
 
   return (
     <div>

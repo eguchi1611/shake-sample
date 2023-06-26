@@ -1,10 +1,10 @@
 import PermCard from "@/components/perm-card";
-import RequestButton from "@/components/request-button";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function IndexPage() {
   const [device, setDevice] = useState("");
+  const [granted, setGranted] = useState(false);
 
   useEffect(() => {
     if (/iPhone/.test(navigator.userAgent)) {
@@ -12,8 +12,8 @@ export default function IndexPage() {
     }
   }, []);
 
-  if (device === "iPhone") {
-    return <PermCard />;
+  if (device === "iPhone" && !granted) {
+    return <PermCard onGranted={() => setGranted(true)} />;
   }
 
   return (

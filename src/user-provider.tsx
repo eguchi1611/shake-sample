@@ -2,7 +2,6 @@ import { User, onAuthStateChanged, signInAnonymously } from "firebase/auth";
 import {
   PropsWithChildren,
   createContext,
-  useCallback,
   useContext,
   useEffect,
   useState,
@@ -12,34 +11,24 @@ import { auth } from "./lib/firebase";
 const context = createContext<User | null>(null);
 
 export default function UserProrivder({ children }: PropsWithChildren) {
-  const [user, setUser] = useState<User | null | undefined>();
+  const [user, setUser] = useState<User | undefined>();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, setUser);
+    const unsubscribe = onAuthStateChanged(auth, (state) => {
+      if (state === null) {
+        signInAnonymously(auth);
+      } else {
+        setUser(state);
+      }
+    });
     return () => {
       unsubscribe();
     };
   }, []);
 
-  const login = useCallback(() => {
-    signInAnonymously(auth);
-  }, []);
-
-  useEffect(() => {
-    login;
-  }, [login]);
-
-  if (user === undefined) return <div>ログイン中...</div>;
-
-  if (user === null)
-    return (
-      <div>
-        <button type="button" onClick={() => login()}>
-          ログイン
-        </button>
-        してください
-      </div>
-    );
+  if (user === undefined) {
+    return <div>ログイン中...</div>;
+  }
 
   return <context.Provider value={user}>{children}</context.Provider>;
 }
