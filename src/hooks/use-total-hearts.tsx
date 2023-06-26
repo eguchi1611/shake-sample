@@ -7,11 +7,11 @@ export default function useTotalHearts() {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    const unsubscribe = onValue(ref(db, "counter"), (snapshot) => {
-      const data: HeartDatabase = snapshot.val();
+    const unsubscribe = onValue(ref(db, "hearts"), (snapshot) => {
+      const data: HeartDatabase = snapshot.val() || {};
       setTotal(
         Object.values(data)
-          .map((heart) => heart.count)
+          .map((heart) => heart.hearts)
           .filter((count) => (count < 1000 ? count : 1000))
           .reduce((p, c) => p + c, 0)
       );

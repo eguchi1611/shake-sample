@@ -16,8 +16,8 @@ export default function StatusViewer() {
 
   const onShake = useCallback(() => {
     if (user) {
-      set(ref(db, "counter/" + user.uid), {
-        count: userHearts + 1,
+      set(ref(db, "hearts/" + user.uid), {
+        hearts: userHearts + 1,
       });
     }
   }, [user, userHearts]);
@@ -100,10 +100,10 @@ export default function StatusViewer() {
     </div>
   );
 
-  return (
-    <div>
-      <div>現在のあなたのカウント: {userHearts}</div>
-      <div>全員の合計カウント: {totalHearts}</div>
-    </div>
-  );
+  // return (
+  //   <div>
+  //     <div>現在のあなたのカウント: {userHearts}</div>
+  //     <div>全員の合計カウント: {totalHearts}</div>
+  //   </div>
+  // );
 }
