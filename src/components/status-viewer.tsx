@@ -66,25 +66,19 @@ export default function StatusViewer() {
         <i className="fa-solid fa-bars"></i>
       </nav>
       <div className="exp">
-        <p>
-          <div className="exp-top">スマホを</div>
-          <div className="exp-main">振って</div>
-          <div className="exp-bottom">ハートを送ろう！</div>
-        </p>
+        <div className="exp-top">スマホを</div>
+        <div className="exp-main">振って</div>
+        <div className="exp-bottom">ハートを送ろう！</div>
       </div>
       <div className="number">
-        <p>
-          <div className="number-left">総ハート数</div>
-          <div className="number-people">{totalHearts}</div>
-        </p>
+        <div className="number-left">総ハート数</div>
+        <div className="number-people">{totalHearts}</div>
       </div>
       <div className="share">
-        <p>
-          <div className="share-top">SNSで</div>
-          <a href="#" className="share-button">
-            シェア<i className="fa-solid fa-share"></i>
-          </a>
-        </p>
+        <span className="share-top">SNSで</span>
+        <a href="#" className="share-button">
+          シェア<i className="fa-solid fa-share"></i>
+        </a>
       </div>
 
       <div className="ragopasu-white">
