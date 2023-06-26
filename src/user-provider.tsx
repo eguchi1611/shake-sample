@@ -2,6 +2,7 @@ import { User, onAuthStateChanged, signInAnonymously } from "firebase/auth";
 import {
   PropsWithChildren,
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -20,13 +21,25 @@ export default function UserProrivder({ children }: PropsWithChildren) {
     };
   }, []);
 
-  useEffect(() => {
+  const login = useCallback(() => {
     signInAnonymously(auth);
   }, []);
 
-  if (user === null) throw "ログインできませんでした";
+  useEffect(() => {
+    login;
+  }, [login]);
 
   if (user === undefined) return <div>ログイン中...</div>;
+
+  if (user === null)
+    return (
+      <div>
+        <button type="button" onClick={() => login()}>
+          ログイン
+        </button>
+        してください
+      </div>
+    );
 
   return <context.Provider value={user}>{children}</context.Provider>;
 }
