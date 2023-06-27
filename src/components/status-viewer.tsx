@@ -1,11 +1,14 @@
+import headerImage from "@/assets/header-image.png";
+import ragopasuBlack from "@/assets/ragopasu-black.png";
+import ragopasuWhite from "@/assets/ragopasu-white.png";
 import { useShake } from "@/hooks/use-shake";
 import useTotalHearts from "@/hooks/use-total-hearts";
 import useUserHearts from "@/hooks/use-user-heartx";
 import { db } from "@/lib/firebase";
+import style from "@/styles/viewer.module.scss";
 import { useUser } from "@/user-provider";
 import { ref, set } from "firebase/database";
-import Head from "next/head";
-import Script from "next/script";
+import Image from "next/image";
 import { useCallback, useEffect, useRef } from "react";
 
 export default function StatusViewer() {
@@ -27,10 +30,9 @@ export default function StatusViewer() {
   const heartContainer = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // コンテナを指定
     const createPetal = () => {
       const petalEl = document.createElement("span");
-      petalEl.className = "heart";
+      petalEl.className = style.heart;
       const minSize = 50;
       const maxSize = 125;
       const minDeg = -15;
@@ -48,62 +50,48 @@ export default function StatusViewer() {
       }, 10000);
     };
 
-    setInterval(createPetal, 300);
+    const timer = setInterval(createPetal, 300);
+
+    return () => {
+      clearInterval(timer);
+    };
   }, []);
 
   return (
-    <div>
-      <Head>
-        <link
-          href="https://use.fontawesome.com/releases/v6.4.0/css/all.css"
-          rel="stylesheet"
-        />
-      </Head>
-      <div className="header-image">
-        <img src="/header-image.png" alt="" />
+    <div className={style.container}>
+      <div className={style.header_image}>
+        <Image src={headerImage} alt="header image" />
       </div>
-      <nav className="nav">
+      <nav className={style.nav}>
         <i className="fa-solid fa-bars"></i>
       </nav>
-      <div className="exp">
-        <div className="exp-top">スマホを</div>
-        <div className="exp-main">振って</div>
-        <div className="exp-bottom">ハートを送ろう！</div>
+      <div className={style.exp}>
+        <div className={style.exp_top}>スマホを</div>
+        <div className={style.exp_main}>振って</div>
+        <div className={style.exp_bottom}>ハートを送ろう！</div>
       </div>
-      <div className="number">
-        <div className="number-left">総ハート数</div>
-        <div className="number-people">{totalHearts}</div>
+      <div className={style.number}>
+        <div className={style.number_container}>
+          <div className={style.number_left}>総ハート数</div>
+          <div className={style.number_people}>{totalHearts}</div>
+        </div>
       </div>
-      <div className="share">
-        <span className="share-top">SNSで</span>
-        <a href="#" className="share-button">
+      <div className={style.share}>
+        <span className={style.share_top}>SNSで</span>
+        <a href="#" className={style.share_button}>
           シェア<i className="fa-solid fa-share"></i>
         </a>
       </div>
 
-      <div className="ragopasu-white">
-        <img src="/ragopasu-white.png" alt="" />
+      <div className={`${style.ragopasu} ${style.ragopasu_white}`}>
+        <Image src={ragopasuWhite} alt="" />
       </div>
 
-      <div className="ragopasu-black">
-        <img src="/ragopasu-black.png" alt="" />
+      <div className={`${style.ragopasu} ${style.ragopasu_black}`}>
+        <Image src={ragopasuBlack} alt="" />
       </div>
 
-      <div className="heart-container" ref={heartContainer}></div>
-
-      <div className="unavalible">
-        スマートフォンから
-        <br />
-        アクセスしてください
-      </div>
-      <Script src="/animation.js"></Script>
+      <div className={style.heart_container} ref={heartContainer}></div>
     </div>
   );
-
-  // return (
-  //   <div>
-  //     <div>現在のあなたのカウント: {userHearts}</div>
-  //     <div>全員の合計カウント: {totalHearts}</div>
-  //   </div>
-  // );
 }

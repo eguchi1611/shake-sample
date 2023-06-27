@@ -7,13 +7,13 @@
   position: relative;
 }
 
-.header-image {
+.header_image {
   position: absolute;
   top: 20px;
   left: 10px;
 }
 
-.header-image img {
+.header_image img {
   height: 64px;
   width: auto;
 }
@@ -44,11 +44,11 @@
   line-height: 1;
 }
 
-.exp-top {
+.exp_top {
   font-size: 32px;
 }
 
-.exp-main {
+.exp_main {
   font-size: 64px;
   padding: 5px;
   background-color: #000;
@@ -56,7 +56,7 @@
   letter-spacing: 5px;
 }
 
-.exp-bottom {
+.exp_bottom {
   font-size: 20px;
 }
 
@@ -73,11 +73,11 @@
   right: 0;
 }
 
-.number-container {
+.number_container {
   position: relative;
 }
 
-.number-left {
+.number_left {
   position: absolute;
   top: -30px;
   left: -35px;
@@ -86,7 +86,7 @@
   font-size: 30px;
 }
 
-.number-people {
+.number_people {
   font-size: 128px;
   line-height: 1;
 }
@@ -105,11 +105,11 @@
   z-index: 99;
 }
 
-.share-top {
+.share_top {
   font-size: 32px;
 }
 
-.share-button {
+.share_button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -125,7 +125,7 @@
   color: #fff;
 }
 
-.share-button i {
+.share_button i {
   padding-left: 7.5px;
 }
 
@@ -142,18 +142,18 @@
   width: 100dvw;
 }
 
-.ragopasu-white {
+.ragopasu_white {
   top: 20px;
   right: -40%;
   transform: rotate(-150deg);
 }
 
-.ragopasu-black {
+.ragopasu_black {
   bottom: -10%;
   left: -40%;
 }
 
-.heart-container {
+.heart_container {
   position: relative;
   height: 100dvh;
   width: 100dvw;
