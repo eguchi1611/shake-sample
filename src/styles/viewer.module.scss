@@ -84,6 +84,7 @@
   transform: rotate(-15deg);
 
   font-size: 30px;
+  white-space: nowrap;
 }
 
 .number_people {
@@ -129,17 +130,17 @@
   padding-left: 7.5px;
 }
 
-.ragopasu img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
 .ragopasu {
   position: absolute;
 
   z-index: -1;
   width: 100dvw;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
 }
 
 .ragopasu_white {
