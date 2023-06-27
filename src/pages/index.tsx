@@ -1,5 +1,6 @@
 import PermCard from "@/components/perm-card";
-import Link from "next/link";
+import StatusViewer from "@/components/status-viewer";
+import UserProrivder from "@/user-provider";
 import { useEffect, useState } from "react";
 
 export default function IndexPage() {
@@ -17,9 +18,8 @@ export default function IndexPage() {
   }
 
   return (
-    <div>
-      準備ができました！
-      <Link href="/counter">ここ</Link>から応援できます！
-    </div>
+    <UserProrivder>
+      <StatusViewer />
+    </UserProrivder>
   );
 }

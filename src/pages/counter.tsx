@@ -1,10 +1,14 @@
-import StatusViewer from "@/components/status-viewer";
-import UserProrivder from "@/user-provider";
+import { GetServerSideProps } from "next";
 
-export default function AppPage() {
-  return (
-    <UserProrivder>
-      <StatusViewer />
-    </UserProrivder>
-  );
+export default function CounterPage() {
+  return null;
 }
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  return {
+    redirect: {
+      permanent: false,
+      destination: "/",
+    },
+  };
+};
